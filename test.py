@@ -1,16 +1,16 @@
 import telebot
-from config import TOKEN
 
 
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot("BOT TOKEN")
 
 
-channel_id = -1001532971635
-channel_username = "@UZunity3d"
+channel_id = "KANAL ID'si"
+channel_username = "KANAL username"
 
-
+#obunachilar nomli dict ochib olinadi
 obunachilar = {}
 
+#obunani tekshiruvchi funksiya yoziladi (dekarator sifatida foydalanamiz)
 def obuna_tekshiruvi(func):
     def obunalar(message):
         user_id = message.from_user.id
@@ -20,6 +20,7 @@ def obuna_tekshiruvi(func):
             bot.reply_to(message, f"Siz kanalga obuna bo'lmagansiz!\nKanal: {channel_username}")
     return obunalar
 
+#Foydalanuvchi botga start bosganda obunani tekshirib, mos javob qaytaradi
 @bot.message_handler(commands=['start'])
 @obuna_tekshiruvi
 def start_xabari(message):
@@ -31,7 +32,7 @@ def start_xabari(message):
     else:
         bot.send_message(chat_id, f"Siz ushbu kanalga obuna bo'lmagansiz: {channel_username}")
 
-
+#Foydalanuvchi obuna bo'lganini tasdiqlovchi/rad qiluvchi funksiya
 def obuna_bolgan(user_id):
     try:
         obuna = bot.get_chat_member(channel_username, user_id)
@@ -40,7 +41,7 @@ def obuna_bolgan(user_id):
         return False
 
 
-
+#Bunda ham istalgan matn yozilganda obunaga tekshiradi
 @bot.message_handler(func=lambda message: True)
 def istalgan_matn(message):
     user_id = message.from_user.id
@@ -52,3 +53,7 @@ def istalgan_matn(message):
         bot.send_message(chat_id, f"Siz ushbu kanalga obuna bo'lmagansiz: {channel_username}")
 
 bot.polling()
+
+
+#By M.M 
+#Telegram Channel: @M_M_portfolio
